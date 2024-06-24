@@ -1,0 +1,46 @@
+.StausIcon {
+  &:hover {
+    cursor: pointer;
+  }
+  position: relative;
+  width: 70px;
+  height: 88px;
+  /* Smart layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 5px;
+  border-radius: 7px;
+  opacity: 1;
+  /* middle */
+  background: #686d76;
+  .magicon {
+    /* Child objects in a smart layout frame */
+    position: static;
+    left: 5px;
+    top: 4px;
+    width: 60px;
+    height: 60px;
+    z-index: 0;
+    opacity: 1;
+  }
+
+  .text- {
+    /* Child objects in a smart layout frame */
+    position: static;
+    left: 20px;
+    top: 64px;
+    width: 30px;
+    height: 20px;
+    z-index: 1;
+    /* Child objects in a smart layout frame */
+    font-family: Stick No Bills;
+    font-size: 15px;
+    font-weight: normal;
+    line-height: normal;
+    text-align: center;
+    letter-spacing: 0em;
+    font-variation-settings: 'opsz' auto;
+    color: #eeeeee;
+  }
+}

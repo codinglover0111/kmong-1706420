@@ -1,0 +1,27 @@
+.button {
+  &:hover {
+    cursor: pointer;
+  }
+  width: 48px;
+  height: 24px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  row-gap: 0px;
+  padding: 5px 24px 5px 24px;
+  overflow: hidden;
+  background: #373a40;
+  .text {
+    flex-shrink: 0;
+    width: 26px;
+    height: 17px;
+    color: #eeeeee;
+    font-family: 'Inter';
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 400;
+    text-align: center;
+  }
+}
