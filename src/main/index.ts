@@ -1,8 +1,8 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-const { cv } = require('opencv-wasm')
 import icon from '../../resources/icon.png?asset'
+import { ipcsINIT } from './ipcFunctions'
 
 function createWindow(): void {
   // Create the browser window.
@@ -50,19 +50,7 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
-
-  ipcMain.on('testCV', () => {
-    const mat = cv.matFromArray(2, 3, cv.CV_8UC1, [1, 2, 3, 4, 5, 6])
-
-    console.log('cols =', mat.cols, '; rows =', mat.rows)
-    console.log(mat.data8S)
-
-    cv.transpose(mat, mat)
-    console.log('cols =', mat.cols, '; rows =', mat.rows)
-    console.log(mat.data8S)
-  })
+  ipcsINIT()
 
   createWindow()
 
