@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f4d612e-b720-4f97-88d2-126a3f4e89ef" name="변경" comment="Update eslint and simplify App component">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/src/components/button.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/src/components/inputfield.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/src/components/showMobileState.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/src/styles/customButton.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/src/styles/inputfield.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/src/styles/showMobileState.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/src/styles/theme.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/ipcFunctions.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/src/types.ts" beforeDir="false" />
-    </list>
+    <list default="true" id="8f4d612e-b720-4f97-88d2-126a3f4e89ef" name="변경" comment="done" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,6 +20,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "codinglover0111"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/codinglover0111/electron-app.git",
+    "accountId": "cd9e4228-6da5-422c-8d13-968de8f4fbc9"
+  }
+}]]></component>
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
@@ -90,8 +89,17 @@
       <option name="presentableId" value="Default" />
       <updated>1719026243808</updated>
       <workItem from="1719026244993" duration="6407000" />
-      <workItem from="1737385108801" duration="508000" />
+      <workItem from="1737385108801" duration="545000" />
     </task>
+    <task id="LOCAL-00001" summary="done">
+      <option name="closed" value="true" />
+      <created>1737385639332</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1737385639332</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -101,5 +109,9 @@
         <option value="$PROJECT_DIR$/src/preload/index.d.ts" />
       </list>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="done" />
+    <option name="LAST_COMMIT_MESSAGE" value="done" />
   </component>
 </project>
