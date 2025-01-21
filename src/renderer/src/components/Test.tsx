@@ -1,6 +1,6 @@
 import { JSX } from 'react'
-import { useLogger } from './hooks/useLogger'
-import { logLevel } from './utils/types'
+import { useLogger } from '@renderer/hooks/useLogger'
+import { logLevel } from '@renderer/types/logType'
 
 function TestComponent(): JSX.Element {
   return (
@@ -14,7 +14,24 @@ function TestComponent(): JSX.Element {
           useLogger({ level, msg: level as string }).sendLog()
         }}
       >
-        test
+        Send Log
+      </button>
+      <button
+        onClick={() => {
+          useLogger({ level: 'info', msg: 'request excute puppeteer' }).sendLog()
+          window.electron.ipcRenderer.send('puppeteer', 'https://naver.com')
+        }}
+      >
+        puppeteer test
+      </button>
+      <button
+        onClick={async () => {
+          const result = await window.electron.ipcRenderer.invoke('puppeteer_close')
+          useLogger({ level: 'info', msg: result }).sendLog()
+          console.log(result)
+        }}
+      >
+        puppeteer close
       </button>
     </>
   )

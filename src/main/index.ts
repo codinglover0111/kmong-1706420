@@ -3,8 +3,11 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { ipcsINIT } from './ipcFunctions'
+import * as fs from 'fs'
+import puppeteer from 'puppeteer-core'
+import { PuppeteerUtils, puppeteerInstanceType } from './puppeteerUtils'
 
-function createWindow(): void {
+async function createWindow(): Promise<void> {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
@@ -50,7 +53,7 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  ipcsINIT()
+  autoLogRemover()
 
   createWindow()
 
@@ -70,5 +73,30 @@ app.on('window-all-closed', () => {
   }
 })
 
+const puppeteerInstance: puppeteerInstanceType = new PuppeteerUtils(
+  app,
+  puppeteer as unknown as typeof import('puppeteer-core')
+)
+
+puppeteerInstance.init()
+
+ipcsINIT(puppeteerInstance)
+
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
+
+async function autoLogRemover(): Promise<void> {
+  const fsAsync = fs.promises
+  // delete log files older than 14 days every time the app starts
+  const files = await fsAsync.readdir('./logs')
+
+  for (const file of files) {
+    const stats = await fsAsync.stat(`./logs/${file}`)
+    const date = new Date()
+    date.setDate(date.getDate() - 14)
+
+    if (stats.birthtime < date) {
+      await fsAsync.rm(`./logs/${file}`)
+    }
+  }
+}

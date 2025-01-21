@@ -1,24 +1,25 @@
 import { ipcMain } from 'electron'
-import * as fs from 'fs'
 
-const fsAsync = fs.promises
-// if i use this date in the function then it will make log file
-// every 1 minute so i put it here
-const date = new Date()
+import { puppeteerInstanceType } from './puppeteerUtils'
+import { logLevel } from '@/renderer/src/types/logType'
+import { logger } from './utils/logger'
 
-export function ipcsINIT(): void {
+export function ipcsINIT(puppeteerInstance: puppeteerInstanceType): void {
   // Ping! Pong!
   ipcMain.on('ping', () => console.log('pong'))
 
   // log save to file and print to console with level
-  ipcMain.on('log', async (_event, level: string = 'info', msg: string) => {
-    console.log(`[${level.toUpperCase()}] ${msg}`)
+  ipcMain.on('log', async (_event, level: logLevel = 'info', msg: string) => {
+    logger(level, msg)
+  })
 
-    fs.existsSync('./logs') || fs.mkdirSync('./logs')
-
-    await fsAsync.appendFile(
-      `./logs/${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}-${date.getHours()}-${date.getMinutes()}.log`,
-      `[${level.toUpperCase()}] ${msg}\n`
-    )
+  // puppeteer test
+  ipcMain.on('puppeteer', async (_event, url: string) => {
+    const puppeteerUtils = puppeteerInstance
+    await puppeteerUtils.getPage(url)
+  })
+  ipcMain.handle('puppeteer_close', () => {
+    const puppeteerUtils = puppeteerInstance
+    return puppeteerUtils.close()
   })
 }

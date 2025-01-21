@@ -1,4 +1,4 @@
-import { logLevel } from '@renderer/utils/types'
+import { logLevel } from '@renderer/types/logType'
 
 interface UseLoggerParams {
   level: logLevel
