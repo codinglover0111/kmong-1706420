@@ -1,34 +1,15 @@
-# electron-app
+# Electron 템플릿
 
-An Electron application with React and TypeScript
+외주 개발을 위한 Electron 템플릿입니다.
 
-## Recommended IDE Setup
+## 개발해야하는 기능
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-
-## Project Setup
-
-### Install
-
-```bash
-$ pnpm install
-```
-
-### Development
-
-```bash
-$ pnpm dev
-```
-
-### Build
-
-```bash
-# For windows
-$ pnpm build:win
-
-# For macOS
-$ pnpm build:mac
-
-# For Linux
-$ pnpm build:linux
-```
+- [x] 프론트엔드 로그 전송 기능
+- [x] 로그 저장 기능
+  - [ ] 로그 자동 삭제 기능
+- [ ] 크롤링 로그인 기능
+- [ ] 크롤링 주기적 반복 기능
+- [ ] 크롤링 엑셀 저장 기능
+- [ ] 크롤링 사이트 캡쳐 기능
+- [ ] 자동 업데이트 기능
+- [ ] Transformer.js를 이용하여 글자,물건 인식이 필요한 경우
