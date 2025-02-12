@@ -20,15 +20,15 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "codinglover0111"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;codinglover0111&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
-    "url": "https://github.com/codinglover0111/electron-app.git",
+    "url": "https://github.com/codinglover0111/kmong-1706420.git",
     "accountId": "cd9e4228-6da5-422c-8d13-968de8f4fbc9"
   }
 }]]></component>
@@ -64,7 +64,7 @@
     "nodejs_package_manager_path": "pnpm",
     "prettierjs.PrettierConfiguration.Package": "C:\\Users\\user\\electron-app\\node_modules\\prettier",
     "settings.editor.selected.configurable": "settings.javascript.prettier",
-    "ts.external.directory.path": "C:\\Users\\user\\electron-app\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "C:\\Users\\user\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -76,7 +76,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-WS-243.23654.120" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-WS-243.23654.157" />
       </set>
     </attachedChunks>
   </component>
@@ -90,6 +90,7 @@
       <updated>1719026243808</updated>
       <workItem from="1719026244993" duration="6407000" />
       <workItem from="1737385108801" duration="545000" />
+      <workItem from="1739360149701" duration="22000" />
     </task>
     <task id="LOCAL-00001" summary="done">
       <option name="closed" value="true" />
