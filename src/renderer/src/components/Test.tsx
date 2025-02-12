@@ -19,10 +19,20 @@ function TestComponent(): JSX.Element {
       <button
         onClick={() => {
           useLogger({ level: 'info', msg: 'request excute puppeteer' }).sendLog()
-          window.electron.ipcRenderer.send('puppeteer', 'https://naver.com')
+          window.electron.ipcRenderer.send(
+            'puppeteer',
+            'https://new.land.naver.com/complexes/3392?ms=37.566994,126.960627,17&a=APT:ABYG:JGC:PRE&e=RETAIL&ad=true&articleNo=2507534909'
+          )
         }}
       >
         puppeteer test
+      </button>
+      <button
+        onClick={() => {
+          window.electron.ipcRenderer.invoke('puppeteer_api')
+        }}
+      >
+        puppeteer API test
       </button>
       <button
         onClick={async () => {

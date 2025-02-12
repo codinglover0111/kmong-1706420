@@ -1,25 +1,28 @@
 import { ipcMain } from 'electron'
 
-import { puppeteerInstanceType } from './puppeteerUtils'
+import { PuppeteerInstanceType } from './puppeteerUtils'
 import { logLevel } from '@/renderer/src/types/logType'
 import { logger } from './utils/logger'
 
-export function ipcsINIT(puppeteerInstance: puppeteerInstanceType): void {
+export function ipcsINIT(puppeteerInstance: PuppeteerInstanceType): void {
   // Ping! Pong!
   ipcMain.on('ping', () => console.log('pong'))
 
   // log save to file and print to console with level
   ipcMain.on('log', async (_event, level: logLevel = 'info', msg: string) => {
-    logger(level, msg)
+    await logger(level, msg)
   })
 
   // puppeteer test
   ipcMain.on('puppeteer', async (_event, url: string) => {
-    const puppeteerUtils = puppeteerInstance
-    await puppeteerUtils.getPage(url)
+    await puppeteerInstance.getPage(url)
   })
   ipcMain.handle('puppeteer_close', () => {
-    const puppeteerUtils = puppeteerInstance
-    return puppeteerUtils.close()
+    return puppeteerInstance.close()
+  })
+
+  // TODO: 값을 불러와서 파싱할 수 있어야함
+  ipcMain.on('puppeteer_api', async (_event, url: string) => {
+    await puppeteerInstance.fetchRestrictedAPI(url)
   })
 }
