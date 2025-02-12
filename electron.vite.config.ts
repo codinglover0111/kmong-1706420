@@ -17,6 +17,9 @@ export default defineConfig({
         '@styles': resolve('src/renderer/src/styles')
       }
     },
-    plugins: [react()]
+    plugins: [react()],
+    server: {
+      port: 5174
+    }
   }
 })

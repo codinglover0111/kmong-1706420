@@ -31,7 +31,8 @@
     "opencv-wasm": "4.3.0-10",
     "puppeteer-core": "^24.1.0",
     "puppeteer-in-electron": "^3.0.5",
-    "react-redux": "^9.1.2"
+    "react-redux": "^9.1.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",

@@ -1,10 +1,11 @@
 import { ipcMain } from 'electron'
 
-import { puppeteerInstanceType } from './puppeteerUtils'
+import { PuppeteerInstanceType } from './puppeteerUtils'
 import { logLevel } from '@/renderer/src/types/logType'
 import { logger } from './utils/logger'
+import * as XLSX from 'xlsx/xlsx.mjs'
 
-export function ipcsINIT(puppeteerInstance: puppeteerInstanceType): void {
+export function ipcsINIT(puppeteerInstance: PuppeteerInstanceType): void {
   // Ping! Pong!
   ipcMain.on('ping', () => console.log('pong'))
 
@@ -21,5 +22,11 @@ export function ipcsINIT(puppeteerInstance: puppeteerInstanceType): void {
   ipcMain.handle('puppeteer_close', () => {
     const puppeteerUtils = puppeteerInstance
     return puppeteerUtils.close()
+  })
+
+  // TODO: 값을 불러와서 파싱할 수 있어야함
+  ipcMain.on('puppeteer_api', async (_event, url: string) => {
+    const puppeteerUtils = puppeteerInstance
+    await puppeteerUtils.fetchRestrictedAPI(url)
   })
 }
