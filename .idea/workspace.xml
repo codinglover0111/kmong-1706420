@@ -5,17 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f4d612e-b720-4f97-88d2-126a3f4e89ef" name="변경" comment="done">
-      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/utils/exportToFile.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/src/components/ButtonComponent.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/electron.vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/electron.vite.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/ipcFunctions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/ipcFunctions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/puppeteerUtils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/puppeteerUtils.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/src/components/Test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/src/components/Test.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +40,7 @@
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -61,10 +53,11 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Node.js/Chrome에 연결.debug renderer.executor": "Debug",
     "Node.js/Chrome에 연결.이름이 지정되지 않았습니다.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main 병합 중",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/user/electron-app",
     "list.type.of.created.stylesheet": "CSS",
@@ -75,9 +68,11 @@
     "node.js.selected.package.standard": "",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "pnpm",
-    "npm.dev -- --sourcemap --remote-debugging-port=9222.executor": "Debug",
-    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\user\\electron-app\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "npm.dev -- --sourcemap --remote-debugging-port=9222.executor": "Run",
+    "npm.dev.executor": "Run",
+    "npm.개발.executor": "Run",
+    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\user\\WebstormProjects\\kmong-1706420\\node_modules\\prettier",
+    "settings.editor.selected.configurable": "Console",
     "ts.external.directory.path": "C:\\Users\\user\\WebstormProjects\\kmong-1706420\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -87,7 +82,7 @@
       <recent name="C:\Users\cjm01\Documents\ldplayerKmong\electron-app\src\renderer\src" />
     </key>
   </component>
-  <component name="RunManager" selected="복합.debug ALL">
+  <component name="RunManager" selected="npm.dev">
     <configuration name="debug renderer" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" port="9229">
       <method v="2" />
     </configuration>
@@ -96,7 +91,7 @@
       <toRun name="dev -- --sourcemap --remote-debugging-port=9222" type="js.build_tools.npm" />
       <method v="2" />
     </configuration>
-    <configuration name="dev -- --sourcemap --remote-debugging-port=9222" type="js.build_tools.npm" nameIsGenerated="true">
+    <configuration name="디버깅" type="js.build_tools.npm">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
@@ -104,12 +99,58 @@
       </scripts>
       <arguments value="-- --sourcemap --remote-debugging-port=9222 " />
       <node-interpreter value="project" />
+      <package-manager value="npm" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="개발" type="js.build_tools.npm" singleton="false">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <EXTENSION ID="com.intellij.lang.javascript.buildTools.npm.rc.StartBrowserRunConfigurationExtension">
+        <browser name="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
+      </EXTENSION>
+      <method v="2" />
+    </configuration>
+    <configuration name="개발" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="개발" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <package-manager value="pnpm" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
       <envs />
       <method v="2" />
     </configuration>
     <list>
       <item itemvalue="Node.js/Chrome에 연결.debug renderer" />
-      <item itemvalue="npm.dev -- --sourcemap --remote-debugging-port=9222" />
+      <item itemvalue="npm.디버깅" />
+      <item itemvalue="npm.dev" />
       <item itemvalue="복합.debug ALL" />
     </list>
   </component>
@@ -121,6 +162,9 @@
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\user\AppData\Roaming\Subversion</configuration>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="디폴트 작업">
       <changelist id="8f4d612e-b720-4f97-88d2-126a3f4e89ef" name="변경" comment="" />
@@ -131,7 +175,10 @@
       <workItem from="1719026244993" duration="6407000" />
       <workItem from="1737385108801" duration="545000" />
       <workItem from="1739360149701" duration="22000" />
-      <workItem from="1739389679562" duration="248000" />
+      <workItem from="1739389679562" duration="702000" />
+      <workItem from="1739390404475" duration="105000" />
+      <workItem from="1739390552617" duration="480000" />
+      <workItem from="1739391050976" duration="20000" />
     </task>
     <task id="LOCAL-00001" summary="done">
       <option name="closed" value="true" />
@@ -141,7 +188,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737385639332</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="done">
+      <option name="closed" value="true" />
+      <created>1739390009772</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1739390009772</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,7 +217,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/renderer/src/components/ButtonComponent.tsx</url>
           <line>6</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

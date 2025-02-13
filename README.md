@@ -4,12 +4,21 @@
 
 ## 개발해야하는 기능
 
-- [x] 프론트엔드 로그 전송 기능
-- [x] 로그 저장 기능
-  - [x] 생성 이후 14일이 경과한 로그 파일 자동 삭제 기능
-- [ ] 크롤링 엑셀 저장 기능
-- [ ] 크롤링 로그인 기능
-- [ ] 크롤링 주기적 반복 기능
-- [ ] 크롤링 사이트 캡쳐 기능
-- [ ] 자동 업데이트 기능
-- [ ] Transformer.js를 이용하여 글자,물건 인식이 필요한 경우
+사이트 링크 모음
+
+[서울시,군,구를 모아놓은 링크 (인증X)](https://new.land.naver.com/api/regions/list?cortarNo=1100000000)
+[해당 군,구를 선택하면 나오는 동(인증X)](https://new.land.naver.com/api/regions/list?cortarNo=1168000000)
+[아파트 종류 (인증X)](https://new.land.naver.com/api/regions/complexes?cortarNo=1168010300&realEstateType=APT%3APRE%3AABYG%3AJGC&order=)
+[중개사에서 취급하는 물건들(인증 O)](https://new.land.naver.com/api/articles?index=3&representativeArticleNo=2507611962)
+
+## 동작 순서
+
+1. 버튼을 누른다.
+
+2. 네이버 부동산을 들어가 새로고침을 통하여 보안 헤더를 인터셉트한다.
+
+3. 기존에 받아놓은 모든 시군구에 동까지 파싱해놓은 숫자로 링크접속한다.
+
+4. 해당 링크에 있는 아파트 값을 전부 파싱한다.
+
+5. 파싱후 엑셀로 저장한다.

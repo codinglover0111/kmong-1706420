@@ -14,8 +14,9 @@ export function ipcsINIT(puppeteerInstance: PuppeteerInstanceType): void {
   })
 
   // puppeteer test
-  ipcMain.on('puppeteer', async (_event, url: string) => {
-    await puppeteerInstance.getPage(url)
+  ipcMain.handle('puppeteer_open_url', async (_event, url: string) => {
+    await puppeteerInstance.getPage(url, { show: false })
+    return 'done'
   })
   ipcMain.handle('puppeteer_close', () => {
     return puppeteerInstance.close()

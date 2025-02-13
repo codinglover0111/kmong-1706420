@@ -5,10 +5,17 @@ import icon from '../../resources/icon.png?asset'
 import { ipcsINIT } from './ipcFunctions'
 import * as fs from 'fs'
 import puppeteer from 'puppeteer-core'
-import { PuppeteerUtils, puppeteerInstanceType } from './puppeteerUtils'
+import { PuppeteerUtils, PuppeteerInstanceType } from './puppeteerUtils'
+
+const puppeteerInstance: PuppeteerInstanceType = new PuppeteerUtils(
+  app,
+  puppeteer as unknown as typeof import('puppeteer-core')
+)
+
+puppeteerInstance.init()
+ipcsINIT(puppeteerInstance)
 
 async function createWindow(): Promise<void> {
-  // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
@@ -21,6 +28,10 @@ async function createWindow(): Promise<void> {
     }
   })
 
+  mainWindow.webContents.on('did-finish-load', () => {
+    mainWindow.webContents.send('puppeteer-init', { status: 'initialized' })
+  })
+
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
@@ -30,8 +41,6 @@ async function createWindow(): Promise<void> {
     return { action: 'deny' }
   })
 
-  // HMR for renderer base on electron-vite cli.
-  // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
@@ -72,15 +81,6 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
-
-const puppeteerInstance: puppeteerInstanceType = new PuppeteerUtils(
-  app,
-  puppeteer as unknown as typeof import('puppeteer-core')
-)
-
-puppeteerInstance.init()
-
-ipcsINIT(puppeteerInstance)
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.

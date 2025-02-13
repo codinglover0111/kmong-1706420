@@ -7,8 +7,9 @@ import { logger } from './utils/logger'
 export interface PuppeteerInstanceType {
   init: () => Promise<void>
   getPage: (url: string, windowOptions?: Electron.BrowserWindowConstructorOptions) => Promise<void>
-  fetchRestrictedAPI: (apiUrl: string) => Promise<void>
+  fetchRestrictedAPI: (apiUrl: string) => Promise<object | void>
   close: () => string
+  reload: () => Promise<void>
   page: Page | undefined
 }
 
@@ -72,11 +73,14 @@ export class PuppeteerUtils implements PuppeteerInstanceType {
     })
 
     logger('info', `페이지 로딩 완료: ${this.page.url()}`)
-    // TODO:리로드 메소드를 제작해야함
-    await this.page.reload()
+    await this.reload()
   }
 
-  async fetchRestrictedAPI(apiUrl: string): Promise<void> {
+  async reload(): Promise<void> {
+    await this.page?.reload()
+  }
+
+  async fetchRestrictedAPI(apiUrl: string): Promise<object | void> {
     if (!this.page || !this.authHeader) {
       logger('error', '페이지가 열려 있지 않거나 인증 헤더가 없습니다.')
       return
@@ -100,10 +104,12 @@ export class PuppeteerUtils implements PuppeteerInstanceType {
       )
 
       // logger('info', `API 응답 데이터: ${JSON.stringify(response)}`)
-      // console.log(`API 응답 데이터: ${JSON.stringify(response)}`)
+      console.log(`API 응답 데이터: ${JSON.stringify(response)}`)
       console.log(`API 응답 성공`)
+      return response
     } catch (error) {
       logger('error', `API 요청 실패: ${String(error)}`)
+      return
     }
   }
 
