@@ -23,7 +23,7 @@ export function ipcsINIT(puppeteerInstance: PuppeteerInstanceType): void {
   })
 
   // TODO: 값을 불러와서 파싱할 수 있어야함
-  ipcMain.on('puppeteer_api', async (_event, url: string) => {
-    await puppeteerInstance.fetchRestrictedAPI(url)
+  ipcMain.handle('puppeteer_api', async (_event, url: string) => {
+    return await puppeteerInstance.fetchRestrictedAPI(url)
   })
 }
