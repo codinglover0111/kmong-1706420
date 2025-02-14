@@ -9,7 +9,20 @@
 [서울시,군,구를 모아놓은 링크 (인증X)](https://new.land.naver.com/api/regions/list?cortarNo=1100000000)
 [해당 군,구를 선택하면 나오는 동(인증X)](https://new.land.naver.com/api/regions/list?cortarNo=1168000000)
 [아파트 종류 (인증X)](https://new.land.naver.com/api/regions/complexes?cortarNo=1168010300&realEstateType=APT%3APRE%3AABYG%3AJGC&order=)
-[중개사에서 취급하는 물건들(인증 O)](https://new.land.naver.com/api/articles?index=3&representativeArticleNo=2507611962)
+[아파트 가격 파싱 (인증 O)](https://new.land.naver.com/api/complexes/3392/prices?complexNo=3392&tradeType=A1&year=5&priceChartChange=false&areaNo=3&type=chart)
+
+### JSON 형식
+
+2021년 1월 이후 아래 정보를 파싱해야한다.
+realPriceDataXList(날짜 정보)
+realPriceDataYList(가격 정보)
+
+### 주의 사항
+
+실거래가 없는 경우 2021년 1월 이후 아래 정보를 파싱해야한다.
+marketPriceAreaList(가격 정보)
+marketPriceXList(날짜 정보)
+[아파트 정보 (인증 O)](https://new.land.naver.com/api/complexes/3392?sameAddressGroup=true)
 
 ## 동작 순서
 

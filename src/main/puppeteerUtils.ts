@@ -86,7 +86,7 @@ export class PuppeteerUtils implements PuppeteerInstanceType {
       return
     }
 
-    logger('info', `API 요청: ${apiUrl}`)
+    // logger('info', `API 요청: ${apiUrl}`)
 
     try {
       const response = await this.page.evaluate(
@@ -104,8 +104,8 @@ export class PuppeteerUtils implements PuppeteerInstanceType {
       )
 
       // logger('info', `API 응답 데이터: ${JSON.stringify(response)}`)
-      console.log(`API 응답 데이터: ${JSON.stringify(response)}`)
-      console.log(`API 응답 성공`)
+      // console.log(`API 응답 데이터: ${JSON.stringify(response)}`)
+      // console.log(`API 응답 성공`)
       return response
     } catch (error) {
       logger('error', `API 요청 실패: ${String(error)}`)
