@@ -2,6 +2,7 @@ import { read, utils, writeFile } from 'xlsx'
 import { useState, useEffect, useRef } from 'react'
 import { XlsxType } from '@renderer/types/xlsxType'
 import { FixedSizeList as List } from 'react-window'
+import { extractRegionCodes, getPyeongPriceData, useRegionCodes } from '@renderer/hooks/utils'
 
 function ButtonComponent(): JSX.Element {
   const [ApartmentList, setApartmentList] = useState<
@@ -20,6 +21,7 @@ function ButtonComponent(): JSX.Element {
   const [isEnabled, setIsEnabled] = useState(false)
 
   useEffect(() => {
+    // Puppeteer 초기화 상태를 감지하는 이벤트 리스너 등록
     const handlePuppeteerInit = (
       _event: Electron.IpcRendererEvent,
       data: { status: string }
@@ -34,6 +36,7 @@ function ButtonComponent(): JSX.Element {
   }, [])
 
   useEffect(() => {
+    // 컨트롤 + F 단축키로 검색창에 포커스를 주는 이벤트 리스너 등록
     const handleKeyDown = (e: KeyboardEvent): void => {
       if (e.ctrlKey && e.key.toLowerCase() === 'f') {
         e.preventDefault()
@@ -50,39 +53,10 @@ function ButtonComponent(): JSX.Element {
     }
   }, [])
 
+  // TODO: hook으로 분리
   const filtered아파트정보 = searchQuery
     ? 아파트_정보.filter((item) => item.아파트명.toLowerCase().includes(searchQuery.toLowerCase()))
     : 아파트_정보
-
-  function 시군구코드추출(
-    value: object
-  ): Array<{ name: string; code: number; centerLat: number; centerLon: number }> {
-    const codes: Array<{ name: string; code: number; centerLat: number; centerLon: number }> = []
-    for (const item of value['regionList']) {
-      codes.push({
-        name: item.cortarName as string,
-        code: item.cortarNo as number,
-        centerLat: item.centerLat as number,
-        centerLon: item.centerLon as number
-      })
-    }
-    return codes
-  }
-
-  function 동코드추출(
-    value: object
-  ): Array<{ name: string; code: number; centerLat: number; centerLon: number }> {
-    const codes: Array<{ name: string; code: number; centerLat: number; centerLon: number }> = []
-    for (const item of value['regionList']) {
-      codes.push({
-        name: item.cortarName as string,
-        code: item.cortarNo as number,
-        centerLat: item.centerLat as number,
-        centerLon: item.centerLon as number
-      })
-    }
-    return codes
-  }
 
   // !: 평마다의 매매 내역, 전고점, 전저점을 못 가져오고 있음
   // async function getPyeongPriceData(
@@ -150,75 +124,6 @@ function ButtonComponent(): JSX.Element {
     }, [])
   }
 
-  function findMinIndex(indexArray): number | undefined {
-    return indexArray.length > 0 ? Math.min(...indexArray) : undefined
-  }
-
-  async function getPyeongPriceData(
-    complexNo: number,
-    areaNo: number
-  ): Promise<{
-    매매: number | string
-    전고점: number | string
-    전저점: number | string
-  }> {
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    // 2021년 기준으로 잡아야함
-    const currentYear = new Date().getFullYear()
-    const targetYear = 2021
-    const difference = currentYear - targetYear
-
-    const summary_url = `https://new.land.naver.com/api/complexes/${complexNo}/prices?complexNo=${complexNo}&tradeType=A1&year=${difference}&priceChartChange=true&areaChange=true&areaNo=${areaNo}&type=summary`
-    const table_url = `https://new.land.naver.com/api/complexes/${complexNo}/prices?complexNo=${complexNo}&tradeType=A1&year=${difference}&priceChartChange=true&areaNo=${areaNo}&areaChange=true&type=table`
-    // const summary_url = `https://new.land.naver.com/api/complexes/${complexNo}/prices?complexNo=${complexNo}&tradeType=A1&year=4&priceChartChange=false&type=summary`
-    // const chart_url = `https://new.land.naver.com/api/complexes/${complexNo}/prices?complexNo=${complexNo}&tradeType=A1&year=${difference}&priceChartChange=true&areaChange=true&type=chart`
-    const real_trade_url = `https://new.land.naver.com/api/complexes/881/prices/real?complexNo=${complexNo}&tradeType=A1&year=${difference}&priceChartChange=true&areaNo=${areaNo}&type=table`
-
-    // const real_trade_res = await window.electron.ipcRenderer.invoke('puppeteer_api', real_trade_url)
-    // const chart_res = await window.electron.ipcRenderer.invoke('puppeteer_api', chart_url)
-    const table_res = await window.electron.ipcRenderer.invoke('puppeteer_api', table_url)
-    const real_trade_res = await window.electron.ipcRenderer.invoke('puppeteer_api', real_trade_url)
-    console.log('real')
-    console.log(real_trade_res)
-    // console.log(real_trade_res)
-    // 2021-01-01 이후 배열 인덱스 찾기기
-    // const 특정년도_이후_배열_인덱스 = findIndexesAfterDateExcludingFirst(
-    //   chart_res.realPriceDataXList,
-    //   '2021-01-01'
-    // )
-    // const 매매_값_배열: [any] = []
-    // for (const 인덱스 of 특정년도_이후_배열_인덱스) {
-    //   매매_값_배열.push(chart_res['realPriceDataYList'][인덱스])
-    // }
-    // const 매매_값 = Math.min(...매매_값_배열)
-    console.log(areaNo)
-    // console.log(table_res)
-    let 매매: number | string = 0
-    if (real_trade_res?.['realPriceOnMonthList'].length > 0) {
-      매매 = real_trade_res?.['realPriceOnMonthList'][0]['realPriceList'][0]['dealPrice']
-    } else {
-      매매 = '-'
-    }
-    console.log({
-      매매: 매매,
-      전고점: table_res?.['marketPrices']?.[0]['dealUpperPriceLimit']
-        ? (table_res['marketPrices'][0]['dealUpperPriceLimit'] as number)
-        : '-',
-      전저점: table_res?.['marketPrices']?.[0]['dealLowPriceLimit']
-        ? (table_res['marketPrices'][0]['dealLowPriceLimit'] as number)
-        : '-'
-    })
-    return {
-      매매: 매매,
-      전고점: table_res?.['marketPrices']?.[0]['dealUpperPriceLimit']
-        ? (table_res['marketPrices'][0]['dealUpperPriceLimit'] as number)
-        : '-',
-      전저점: table_res?.['marketPrices']?.[0]['dealLowPriceLimit']
-        ? (table_res['marketPrices'][0]['dealLowPriceLimit'] as number)
-        : '-'
-    }
-  }
-
   return (
     <div>
       <button
@@ -226,7 +131,7 @@ function ButtonComponent(): JSX.Element {
           // 작업 시작시 작업 중지 요청 플래그 초기화와 진행 상태 활성화
           extractionCancelledRef.current = false
           setIsExtracting(true)
-
+          //TODO: 필요한 기능은 hook으로 분리
           const dongCodes: Array<{
             name: string
             code: number
@@ -246,10 +151,12 @@ function ButtonComponent(): JSX.Element {
             'https://new.land.naver.com/api/regions/list?cortarNo=1100000000'
           )
 
-          const cityDistrictCodes = 시군구코드추출(rawCityDistrictCodes)
+          const cityDistrictCodes = useRegionCodes(rawCityDistrictCodes)
 
           // 동 코드 추출
           // TODO: 동 코드를 저장하여 반복적인 api 호출을 줄일 수 있도록 개선
+          // TODO: 동 코드 추출을 병렬로 처리하여 성능 개선
+          // TODO: 훅으로 분리
           for (const cityDistrict of cityDistrictCodes) {
             if (extractionCancelledRef.current) {
               console.log('작업 중지 요청 확인 - 시,군,구 코드 추출 중단')
@@ -260,7 +167,7 @@ function ButtonComponent(): JSX.Element {
               `https://new.land.naver.com/api/regions/list?cortarNo=${cityDistrict.code}`
             )
 
-            const parsedDongCodes = 동코드추출(rawDongCodes)
+            const parsedDongCodes = extractRegionCodes(rawDongCodes)
             dongCodes.push(...parsedDongCodes)
           }
 
@@ -289,6 +196,7 @@ function ButtonComponent(): JSX.Element {
               setProgressPercent(Math.round((index / dongCodes.length) * 100))
               index++
               if (index === 99) {
+                // 99% 도달 시 100%로 설정
                 setProgressPercent(100)
               }
             }
@@ -338,6 +246,8 @@ function ButtonComponent(): JSX.Element {
 
               if (response && response.complexDetail && response.complexPyeongDetailList) {
                 // 아파트 객체 생성
+                // TODO: 리팩토링
+                // TODO: hook으로 분리
                 const detail = response.complexDetail
                 const addressParts = detail.address ? detail.address.split(' ') : ['', '', '']
                 const 시 = addressParts[0] ? addressParts[0].replace('시', '') : ''
