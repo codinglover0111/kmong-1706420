@@ -30,7 +30,7 @@ export class PuppeteerUtils implements PuppeteerInstanceType {
   async init(): Promise<void> {
     try {
       logger('info', 'puppeteer 초기화 시작...')
-      await pie.initialize(this.app, 9898)
+      await pie.initialize(this.app)
       this.browser = await pie.connect(this.app, this.puppeteer)
       logger('info', 'puppeteer 초기화 완료')
     } catch (e: unknown) {

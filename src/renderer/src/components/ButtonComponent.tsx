@@ -3,11 +3,13 @@ import { useState, useEffect, useRef } from 'react'
 import { XlsxType } from '@renderer/types/xlsxType'
 import { FixedSizeList as List } from 'react-window'
 import { extractRegionCodes, getPyeongPriceData, useRegionCodes } from '@renderer/hooks/utils'
+import { aggregatedComplexListType, complexListType, dongCodeType } from '@renderer/types/types'
 
 function ButtonComponent(): JSX.Element {
   const [ApartmentList, setApartmentList] = useState<
     { name: string; code: number; dong: string }[]
   >([])
+  const [dongExtracted, setDongExtracted] = useState(false)
   const [아파트_정보, set아파트_정보] = useState<XlsxType[]>([])
   const [prgressPercent, setProgressPercent] = useState(0)
   const [totalCount, setTotalCount] = useState(0)
@@ -58,71 +60,24 @@ function ButtonComponent(): JSX.Element {
     ? 아파트_정보.filter((item) => item.아파트명.toLowerCase().includes(searchQuery.toLowerCase()))
     : 아파트_정보
 
-  // !: 평마다의 매매 내역, 전고점, 전저점을 못 가져오고 있음
-  // async function getPyeongPriceData(
-  //   complexNo: number,
-  //   pyeongValue: number,
-  //   areaNo: number
-  // ): Promise<{
-  //   매매: number | string
-  //   전고점: number | string
-  //   전저점: number | string
-  //   거래내역?: any[]
-  // }> {
-  //   // 동적 areaNo를 사용하여 각 건물 타입에 따른 가격 데이터를 요청
-  //   const url = `https://new.land.naver.com/api/complexes/${complexNo}/prices/real?complexNo=${complexNo}&tradeType=A1&year=5&priceChartChange=true&pyeong=${pyeongValue}&areaNo=${areaNo}&type=table`
-  //   console.log('[getPyeongPriceData] 요청 URL:', url)
-  //   const res = await window.electron.ipcRenderer.invoke('puppeteer_api', url)
-  //   console.log('[getPyeongPriceData] API 응답:', res)
-  //   if (res && Array.isArray(res.realPriceOnMonthList)) {
-  //     // 모든 월별 거래 내역을 하나의 배열로 결합
-  //     const allTransactions = res.realPriceOnMonthList.reduce((acc: any[], cur: any) => {
-  //       if (cur.realPriceList) {
-  //         return acc.concat(cur.realPriceList)
-  //       }
-  //       return acc
-  //     }, [])
-
-  //     const minTimestamp = new Date('2021-01-01').getTime()
-  //     // 거래 날짜가 2021-01-01 이후인 거래만 필터링 (tradeYear, tradeMonth, tradeDate를 이용)
-  //     const validTransactions = allTransactions.filter((tx) => {
-  //       const dateStr = `${tx.tradeYear}-${String(tx.tradeMonth).padStart(2, '0')}-${String(tx.tradeDate).padStart(2, '0')}`
-  //       const txTime = new Date(dateStr).getTime()
-  //       return !isNaN(txTime) && txTime >= minTimestamp
-  //     })
-
-  //     let 매매, 전고, 전저
-  //     if (validTransactions.length > 0) {
-  //       // 마지막 거래 가격을 매매가격으로 사용
-  //       매매 = validTransactions[validTransactions.length - 1].dealPrice
-  //       전고 = Math.max(...validTransactions.map((tx) => tx.dealPrice))
-  //       전저 = Math.min(...validTransactions.map((tx) => tx.dealPrice))
-  //     } else {
-  //       매매 = 전고 = 전저 = '-'
+  // 쓰지 않는 코드
+  // function findIndexesAfterDateExcludingFirst(arr, baseDateStr): [number] {
+  //   const baseDate = new Date(baseDateStr)
+  //   return arr.reduce((result, item, index) => {
+  //     if (index === 0) {
+  //       // 첫 번째 요소는 제외합니다.
+  //       return result
   //     }
-  //     return { 매매, 전고점: 전고, 전저점: 전저, 거래내역: validTransactions }
-  //   } else {
-  //     return { 매매: '-', 전고점: '-', 전저점: '-' }
-  //   }
+  //     // 날짜 형식(YYYY-MM-DD)인지 확인
+  //     if (/^\d{4}-\d{2}-\d{2}$/.test(item)) {
+  //       const currentDate = new Date(item)
+  //       if (currentDate > baseDate) {
+  //         result.push(index)
+  //       }
+  //     }
+  //     return result
+  //   }, [])
   // }
-
-  function findIndexesAfterDateExcludingFirst(arr, baseDateStr): [number] {
-    const baseDate = new Date(baseDateStr)
-    return arr.reduce((result, item, index) => {
-      if (index === 0) {
-        // 첫 번째 요소는 제외합니다.
-        return result
-      }
-      // 날짜 형식(YYYY-MM-DD)인지 확인
-      if (/^\d{4}-\d{2}-\d{2}$/.test(item)) {
-        const currentDate = new Date(item)
-        if (currentDate > baseDate) {
-          result.push(index)
-        }
-      }
-      return result
-    }, [])
-  }
 
   return (
     <div>
@@ -132,18 +87,14 @@ function ButtonComponent(): JSX.Element {
           extractionCancelledRef.current = false
           setIsExtracting(true)
           //TODO: 필요한 기능은 hook으로 분리
-          const dongCodes: Array<{
-            name: string
-            code: number
-            centerLat: number
-            centerLon: number
-          }> = []
+          const dongCodes: Array<dongCodeType> = []
 
           // 인증 헤더 인터셉트
           const result = await window.electron.ipcRenderer.invoke(
             'puppeteer_open_url',
             'https://new.land.naver.com/complexes/110125?ms=37.5688591,126.960627,17&a=APT:ABYG:JGC:PRE&e=RETAIL&ad=true'
           )
+          console.log(result)
 
           // 시,군,구 코드 추출
           const rawCityDistrictCodes = await window.electron.ipcRenderer.invoke(
@@ -154,32 +105,48 @@ function ButtonComponent(): JSX.Element {
           const cityDistrictCodes = useRegionCodes(rawCityDistrictCodes)
 
           // 동 코드 추출
-          // TODO: 동 코드를 저장하여 반복적인 api 호출을 줄일 수 있도록 개선
-          // TODO: 동 코드 추출을 병렬로 처리하여 성능 개선
-          // TODO: 훅으로 분리
-          for (const cityDistrict of cityDistrictCodes) {
-            if (extractionCancelledRef.current) {
-              console.log('작업 중지 요청 확인 - 시,군,구 코드 추출 중단')
-              break
-            }
-            const rawDongCodes = await window.electron.ipcRenderer.invoke(
-              'puppeteer_api',
-              `https://new.land.naver.com/api/regions/list?cortarNo=${cityDistrict.code}`
-            )
+          let dongCodeRaws: string = ''
 
-            const parsedDongCodes = extractRegionCodes(rawDongCodes)
+          dongCodeRaws = await window.electron.ipcRenderer.invoke('load_file', 'dongCodes.json')
+
+          // 동 코드가 저장된 파일이 없을 경우에만 동 코드를 추출
+          if (!dongCodeRaws) {
+            console.log('동 코드 파일 없음')
+            for (const cityDistrict of cityDistrictCodes) {
+              if (extractionCancelledRef.current) {
+                console.log('작업 중지 요청 확인 - 시,군,구 코드 추출 중단')
+                break
+              }
+              const rawDongCodes = await window.electron.ipcRenderer.invoke(
+                'puppeteer_api',
+                `https://new.land.naver.com/api/regions/list?cortarNo=${cityDistrict.code}`
+              )
+
+              const parsedDongCodes = extractRegionCodes(rawDongCodes)
+              dongCodes.push(...parsedDongCodes)
+            }
+            // 동코드를 파일로 저장
+            const fileName = 'dongCodes.json'
+            const jsonData = JSON.stringify(dongCodes, null, 2)
+            await window.electron.ipcRenderer.invoke('save_file', fileName, jsonData)
+            console.log('동코드 저장 완료')
+            console.log(dongCodes)
+          } else {
+            // 동 코드가 저장된 파일이 있을 경우
+            console.log('동 코드 파일 있음')
+            const dongCodeRaws = await window.electron.ipcRenderer.invoke(
+              'load_file',
+              'dongCodes.json'
+            )
+            const parsedDongCodes = JSON.parse(dongCodeRaws)
             dongCodes.push(...parsedDongCodes)
           }
 
           // 테스트용: 동 코드를 하나씩 추출하여 아파트 목록 파싱
-          const aggregatedComplexList: Array<{
-            cortarAddress: string
-            complexName: string
-            complexNo: number
-            totalHouseholdCount: number
-            realEstateTypeCode: string
-          }> = []
+          const aggregatedComplexList: Array<aggregatedComplexListType> = []
+          // 퍼센트 계산을 위한 인덱스
           let index = 0
+
           for (const dong of dongCodes) {
             if (extractionCancelledRef.current) {
               console.log('작업 중지 요청 확인 - 아파트 목록 파싱 중단')
@@ -189,7 +156,7 @@ function ButtonComponent(): JSX.Element {
               'puppeteer_api',
               `https://new.land.naver.com/api/regions/complexes?cortarNo=${dong.code}`
             )
-            console.log(response)
+            // console.log(response)
             if (response) {
               aggregatedComplexList.push(...response['complexList'])
 
@@ -206,22 +173,26 @@ function ButtonComponent(): JSX.Element {
             }
           }
           console.log('끝')
-          let 출력용_데이터: Array<{ name: string; dong: string; code: number }> = []
+          let 출력용_데이터: Array<complexListType> = []
           // 작업 중지가 발생하지 않았을 때만 결과를 처리
           if (!extractionCancelledRef.current) {
             출력용_데이터 = aggregatedComplexList
               // 200가구 이상 필터링
               .filter((item) => item.totalHouseholdCount >= 200)
+              // 아파트 필터링
               .filter((item) => item.realEstateTypeCode === 'APT')
+              // 주상복합, 도시형 생활주택 제외
               .filter(
                 (item) =>
                   !item.complexName.includes('주상복합') && !item.complexName.includes('도시형')
               )
+              // 중복 제거
               .map((item) => ({
                 name: item.complexName,
                 dong: item.cortarAddress,
                 code: item.complexNo
               }))
+              // 정렬
               .sort((a, b) => a.name.localeCompare(b.name))
 
             setApartmentList(출력용_데이터)
@@ -229,8 +200,8 @@ function ButtonComponent(): JSX.Element {
           }
           // 아파트 정보 파싱
           if (!extractionCancelledRef.current) {
-            let aptParsingIndex = 0 // 아파트 파싱 진행률 계산용 변수 추가
-            // https://new.land.naver.com/api/complexes/3392?sameAddressGroup=true
+            // 아파트 파싱 진행률 계산용 변수 추가
+            let aptParsingIndex = 0
             for (const item of 출력용_데이터) {
               const response = await window.electron.ipcRenderer.invoke(
                 'puppeteer_api',
@@ -375,6 +346,51 @@ function ButtonComponent(): JSX.Element {
       >
         아파트 목록 추출
       </button>
+
+      <button
+        onClick={async () => {
+          const dongCodes: Array<dongCodeType> = []
+
+          // 인증 헤더 인터셉트
+          const result = await window.electron.ipcRenderer.invoke(
+            'puppeteer_open_url',
+            'https://new.land.naver.com/complexes/110125?ms=37.5688591,126.960627,17&a=APT:ABYG:JGC:PRE&e=RETAIL&ad=true'
+          )
+          console.log(result)
+
+          // 시,군,구 코드 추출
+          const rawCityDistrictCodes = await window.electron.ipcRenderer.invoke(
+            'puppeteer_api',
+            'https://new.land.naver.com/api/regions/list?cortarNo=1100000000'
+          )
+
+          const cityDistrictCodes = useRegionCodes(rawCityDistrictCodes)
+
+          for (const cityDistrict of cityDistrictCodes) {
+            if (extractionCancelledRef.current) {
+              console.log('작업 중지 요청 확인 - 시,군,구 코드 추출 중단')
+              break
+            }
+            const rawDongCodes = await window.electron.ipcRenderer.invoke(
+              'puppeteer_api',
+              `https://new.land.naver.com/api/regions/list?cortarNo=${cityDistrict.code}`
+            )
+
+            const parsedDongCodes = extractRegionCodes(rawDongCodes)
+            dongCodes.push(...parsedDongCodes)
+          }
+          // 동코드를 파일로 저장
+          const fileName = 'dongCodes.json'
+          const jsonData = JSON.stringify(dongCodes, null, 2)
+          await window.electron.ipcRenderer.invoke('save_file', fileName, jsonData)
+          console.log('동코드 저장 완료')
+          console.log(dongCodes)
+          setDongExtracted(true)
+        }}
+        disabled={isExtracting}
+      >
+        동코드 새로 추출
+      </button>
       <button
         onClick={async () => {
           // 작업 중지 요청
@@ -391,6 +407,7 @@ function ButtonComponent(): JSX.Element {
       >
         종료
       </button>
+      <p style={{ display: dongExtracted ? 'block' : 'none' }}>동 코드 추출 완료</p>
       <p>아파트 목록 파싱 진행 상황 : {prgressPercent}%</p>
       <p>아파트 정보 파싱 진행 상황 : {aptParsingProgress}%</p>
       <p>총 개수 : {totalCount}개</p>
@@ -416,6 +433,7 @@ function ButtonComponent(): JSX.Element {
       >
         xlsx 추출
       </button>
+
       <input
         id="apartment-search-input"
         type="text"

@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f4d612e-b720-4f97-88d2-126a3f4e89ef" name="변경" comment="done">
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/electron.vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/electron.vite.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/src/components/ButtonComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/src/components/ButtonComponent.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/src/types/xlsxType.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/src/types/xlsxType.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/src/hooks/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/src/hooks/utils.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +60,7 @@
     "Node.js/Chrome에 연결.이름이 지정되지 않았습니다.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "2차",
+    "git-widget-placeholder": "3차",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/user/electron-app",
     "list.type.of.created.stylesheet": "CSS",
@@ -70,8 +72,9 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "pnpm",
     "npm.dev -- --sourcemap --remote-debugging-port=9222.executor": "Run",
-    "npm.dev.executor": "Run",
+    "npm.dev.executor": "Debug",
     "npm.개발.executor": "Run",
+    "npm.디버깅.executor": "Debug",
     "prettierjs.PrettierConfiguration.Package": "C:\\Users\\user\\WebstormProjects\\kmong-1706420\\node_modules\\prettier",
     "settings.editor.selected.configurable": "Console",
     "ts.external.directory.path": "C:\\Users\\user\\WebstormProjects\\kmong-1706420\\node_modules\\typescript\\lib",
@@ -83,7 +86,7 @@
       <recent name="C:\Users\cjm01\Documents\ldplayerKmong\electron-app\src\renderer\src" />
     </key>
   </component>
-  <component name="RunManager" selected="npm.dev">
+  <component name="RunManager" selected="npm.디버깅">
     <configuration name="debug renderer" type="ChromiumRemoteDebugType" factoryName="Chromium Remote" port="9229">
       <method v="2" />
     </configuration>
@@ -98,9 +101,9 @@
       <scripts>
         <script value="dev" />
       </scripts>
-      <arguments value="-- --sourcemap --remote-debugging-port=9222 " />
+      <arguments value="-- --sourcemap --remote-debugging-port=9223" />
       <node-interpreter value="project" />
-      <package-manager value="npm" />
+      <package-manager value="pnpm" />
       <envs />
       <method v="2" />
     </configuration>
@@ -158,7 +161,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-WS-243.23654.157" />
+        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-WS-243.24978.60" />
       </set>
     </attachedChunks>
   </component>
@@ -181,6 +184,7 @@
       <workItem from="1739390552617" duration="480000" />
       <workItem from="1739391050976" duration="20000" />
       <workItem from="1739612207114" duration="597000" />
+      <workItem from="1740089620546" duration="706000" />
     </task>
     <task id="LOCAL-00001" summary="done">
       <option name="closed" value="true" />
@@ -218,7 +222,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/renderer/src/components/ButtonComponent.tsx</url>
-          <line>226</line>
+          <line>84</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

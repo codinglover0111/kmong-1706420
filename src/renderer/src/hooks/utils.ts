@@ -4,7 +4,11 @@ export interface RegionCode {
   centerLat: number
   centerLon: number
 }
-
+/**
+ * object를 받아서 구동 코드로 구성된 object를 반환하는 함수
+ * @param value object
+ * @returns 구동 코드로 구성된 object
+ */
 export function useRegionCodes(
   value: object
 ): Array<{ name: string; code: number; centerLat: number; centerLon: number }> {
